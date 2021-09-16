@@ -1,2 +1,3 @@
 # bluetail
-Yet another Twitter API client for Node.js
+
+Twitter API library for Node.js

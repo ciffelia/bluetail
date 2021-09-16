@@ -1,0 +1,40 @@
+{
+  "name": "bluetail",
+  "description": "Twitter API library for Node.js",
+  "author": "Ciffelia <mc.prince.0203@gmail.com> (https://ciffelia.com/)",
+  "repository": "github:ciffelia/bluetail",
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint:prettier": "prettier --check .",
+    "lint:eslint": "eslint --ext .js,.ts ./src",
+    "lint": "yarn lint:prettier && yarn lint:eslint",
+    "fix:prettier": "prettier --write .",
+    "fix:eslint": "eslint --ext .js,.ts --fix ./src",
+    "fix": "yarn fix:prettier && yarn fix:eslint",
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard-with-typescript": "^21.0.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "pinst": "^2.1.6",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.3"
+  },
+  "packageManager": "yarn@3.0.2",
+  "lint-staged": {
+    "*.{js,ts,json,yml,md}": "prettier --check",
+    "*.{js,ts}": "eslint"
+  }
+}

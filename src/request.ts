@@ -16,7 +16,7 @@ const request = async (
   option: RequestOption
 ): Promise<Response> => {
   const headers: Record<string, string> = defaultHeaders
-  const params: Record<string, string> = defaultParams
+  const params: Record<string, string> = { ...defaultParams, ...option.params }
   let body: string | undefined
 
   const authHeaders = option.auth.toHeaders({

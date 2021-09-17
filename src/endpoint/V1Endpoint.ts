@@ -13,7 +13,7 @@ class V1Endpoint implements Endpoint {
   }
 
   payloadType(): PayloadType {
-    return this.property.payloadType
+    return this.property.payloadType ?? 'None'
   }
 
   subdomain(): string {
@@ -29,7 +29,7 @@ interface V1EndpointProperty {
   subdomain?: string
   method: string
   path: string
-  payloadType: PayloadType
+  payloadType?: PayloadType
 }
 
 export { V1Endpoint, V1EndpointProperty }

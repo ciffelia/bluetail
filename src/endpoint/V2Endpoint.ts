@@ -13,7 +13,7 @@ class V2Endpoint implements Endpoint {
   }
 
   payloadType(): PayloadType {
-    return this.property.payloadType
+    return this.property.payloadType ?? 'None'
   }
 
   path(): string {
@@ -24,7 +24,7 @@ class V2Endpoint implements Endpoint {
 interface V2EndpointProperty {
   method: string
   path: string
-  payloadType: PayloadType
+  payloadType?: PayloadType
 }
 
 export { V2Endpoint, V2EndpointProperty }

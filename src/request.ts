@@ -3,7 +3,7 @@ import { Endpoint } from './endpoint'
 import { AuthMethod } from './auth'
 import { buildUrlWithParams } from './buildUrlWithParams'
 
-const defaultHeader = {
+const defaultHeaders = {
   'User-Agent': 'bluetail'
 } as const
 
@@ -15,7 +15,7 @@ const request = async (
   endpoint: Endpoint,
   option: RequestOption
 ): Promise<Response> => {
-  const headers: Record<string, string> = defaultHeader
+  const headers: Record<string, string> = defaultHeaders
   const params: Record<string, string> = defaultParams
   let body: string | undefined
 

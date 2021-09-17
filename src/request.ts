@@ -15,19 +15,20 @@ const request = async (
   endpoint: Endpoint,
   option: RequestOption
 ): Promise<Response> => {
-  const headers: Record<string, string> = {
-    ...defaultHeaders,
-    ...option.headers
-  }
   const params: Record<string, string> = { ...defaultParams, ...option.params }
-  let body: string | undefined
 
   const authHeaders = option.credential.toHeaders({
     endpoint,
     params,
     body: option.body
   })
-  Object.assign(headers, authHeaders)
+  const headers: Record<string, string> = {
+    ...defaultHeaders,
+    ...authHeaders,
+    ...option.headers
+  }
+
+  let body: string | undefined
 
   switch (endpoint.payloadType()) {
     case 'UrlEncodedForm':

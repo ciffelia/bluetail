@@ -1,5 +1,5 @@
-export { AppAuth } from './AppAuth'
-export { AuthMethod } from './AuthMethod'
+export { AppAuthCredential } from './AppAuthCredential'
+export { Credential } from './Credential'
 export { AuthorizeOption } from './AuthorizeOption'
 export { KeyPair } from './KeyPair'
-export { UserAuth } from './UserAuth'
+export { UserAuthCredential } from './UserAuthCredential'

@@ -1,6 +1,6 @@
 import fetch, { Response } from 'cross-fetch'
 import { Endpoint } from './endpoint'
-import { AuthMethod } from './auth'
+import { Credential } from './auth'
 import { buildUrlWithParams } from './buildUrlWithParams'
 
 const defaultHeaders = {
@@ -22,7 +22,7 @@ const request = async (
   const params: Record<string, string> = { ...defaultParams, ...option.params }
   let body: string | undefined
 
-  const authHeaders = option.auth.toHeaders({
+  const authHeaders = option.credential.toHeaders({
     endpoint,
     params,
     body: option.body
@@ -51,7 +51,7 @@ const request = async (
 }
 
 interface RequestOption {
-  auth: AuthMethod
+  credential: Credential
   params?: Record<string, string>
   headers?: Record<string, string>
   body?: unknown

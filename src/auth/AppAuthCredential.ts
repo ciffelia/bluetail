@@ -1,8 +1,8 @@
-import { AuthMethod } from './AuthMethod'
+import { Credential } from './Credential'
 import { AuthorizeOption } from './AuthorizeOption'
 
 // App auth (OAuth 1.0a)
-class AppAuth implements AuthMethod {
+class AppAuthCredential implements Credential {
   constructor(public bearerToken: string) {}
 
   toHeaders(_option?: AuthorizeOption): Record<string, string> {
@@ -12,4 +12,4 @@ class AppAuth implements AuthMethod {
   }
 }
 
-export { AppAuth }
+export { AppAuthCredential }

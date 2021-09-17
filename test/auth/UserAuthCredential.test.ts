@@ -1,7 +1,7 @@
 import OAuth1 from 'oauth-1.0a'
-import { UserAuth, KeyPair, Endpoint } from '../../src'
+import { UserAuthCredential, KeyPair, Endpoint } from '../../src'
 
-describe('UserAuth', () => {
+describe('UserAuthCredential', () => {
   beforeAll(() => {
     // @ts-expect-error
     OAuth1.prototype._getTimeStamp = OAuth1.prototype.getTimeStamp
@@ -43,7 +43,7 @@ describe('UserAuth', () => {
       }
 
       expect(
-        new UserAuth(consumer, accessToken).toHeaders({
+        new UserAuthCredential(consumer, accessToken).toHeaders({
           endpoint,
           params: { include_entities: 'true' },
           body: { status: 'Hello Ladies + Gentlemen, a signed OAuth request!' }

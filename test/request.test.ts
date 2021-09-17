@@ -1,4 +1,10 @@
-import { request, AppAuth, Endpoint, KeyPair, UserAuth } from '../src'
+import {
+  request,
+  AppAuthCredential,
+  Endpoint,
+  KeyPair,
+  UserAuthCredential
+} from '../src'
 
 describe('request', () => {
   const endpoint: Endpoint = {
@@ -8,9 +14,9 @@ describe('request', () => {
   }
 
   it('should return error for invalid payload type', async () => {
-    const auth = new AppAuth('bearer_token')
+    const credential = new AppAuthCredential('bearer_token')
 
-    await expect(request(endpoint, { auth, body: {} })).rejects.toThrow(
+    await expect(request(endpoint, { credential, body: {} })).rejects.toThrow(
       new TypeError('Body must not be set for this endpoint.')
     )
   })
@@ -22,17 +28,17 @@ describe('request', () => {
       // @ts-expect-error
       payloadType: () => 'Unknown'
     }
-    const auth = new AppAuth('bearer_token')
+    const credential = new AppAuthCredential('bearer_token')
 
-    await expect(request(endpoint, { auth, body: {} })).rejects.toThrow(
+    await expect(request(endpoint, { credential, body: {} })).rejects.toThrow(
       new TypeError('Unknown payload type: Unknown')
     )
   })
 
   it('should return error for invalid app auth', async () => {
-    const auth = new AppAuth('bearer_token')
+    const credential = new AppAuthCredential('bearer_token')
 
-    const resp = await request(endpoint, { auth })
+    const resp = await request(endpoint, { credential })
     expect(resp.status).toEqual(401)
     expect(await resp.json()).toEqual({
       errors: [{ code: 89, message: 'Invalid or expired token.' }]
@@ -48,9 +54,9 @@ describe('request', () => {
       key: 'access_token_key',
       secret: 'access_token_secret'
     }
-    const auth = new UserAuth(consumer, accessToken)
+    const credential = new UserAuthCredential(consumer, accessToken)
 
-    const resp = await request(endpoint, { auth })
+    const resp = await request(endpoint, { credential })
     expect(resp.status).toEqual(401)
     expect(await resp.json()).toEqual({
       errors: [{ code: 89, message: 'Invalid or expired token.' }]

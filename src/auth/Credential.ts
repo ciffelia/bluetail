@@ -1,7 +1,7 @@
 import { AuthorizeOption } from './AuthorizeOption'
 
-interface AuthMethod {
+interface Credential {
   toHeaders: (option: AuthorizeOption) => Record<string, string>
 }
 
-export { AuthMethod }
+export { Credential }

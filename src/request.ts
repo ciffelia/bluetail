@@ -29,18 +29,24 @@ const request = async (
   })
   Object.assign(headers, authHeaders)
 
-  if (endpoint.payloadType() === 'UrlEncodedForm') {
-    headers['Content-Type'] = 'application/x-www-form-urlencoded'
-    body = new URLSearchParams(option.body as Record<string, string>).toString()
-  } else if (endpoint.payloadType() === 'JSON') {
-    headers['Content-Type'] = 'application/json'
-    body = JSON.stringify(option.body)
-  } else if (endpoint.payloadType() === 'None') {
-    if (option.body != null) {
-      throw new TypeError('Body must not be set for this endpoint.')
-    }
-  } else {
-    throw new TypeError(`Unknown payload type: ${endpoint.payloadType()}`)
+  switch (endpoint.payloadType()) {
+    case 'UrlEncodedForm':
+      headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      body = new URLSearchParams(
+        option.body as Record<string, string>
+      ).toString()
+      break
+    case 'JSON':
+      headers['Content-Type'] = 'application/json'
+      body = JSON.stringify(option.body)
+      break
+    case 'None':
+      if (option.body != null) {
+        throw new TypeError('Body must not be set for this endpoint.')
+      }
+      break
+    default:
+      throw new TypeError(`Unknown payload type: ${endpoint.payloadType()}`)
   }
 
   return await fetch(buildUrlWithParams(endpoint.url(), params), {

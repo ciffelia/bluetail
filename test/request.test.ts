@@ -8,6 +8,28 @@ describe('request', () => {
     payloadType: () => 'None'
   }
 
+  it('should return error for invalid payload type', async () => {
+    const auth = new AppAuth('bearer_token')
+
+    await expect(request(endpoint, { auth, body: {} })).rejects.toThrow(
+      new TypeError('Body must not be set for this endpoint.')
+    )
+  })
+
+  it('should return error for unknown payload type', async () => {
+    const endpoint: Endpoint = {
+      method: () => 'GET',
+      url: () => 'https://api.twitter.com/1.1/account/verify_credentials.json',
+      // @ts-expect-error
+      payloadType: () => 'Unknown'
+    }
+    const auth = new AppAuth('bearer_token')
+
+    await expect(request(endpoint, { auth, body: {} })).rejects.toThrow(
+      new TypeError('Unknown payload type: Unknown')
+    )
+  })
+
   it('should return error for invalid app auth', async () => {
     const auth = new AppAuth('bearer_token')
 

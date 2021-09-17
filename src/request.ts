@@ -32,6 +32,12 @@ const request = async (
   } else if (endpoint.payloadType() === 'JSON') {
     headers['Content-Type'] = 'application/json'
     body = JSON.stringify(option.body)
+  } else if (endpoint.payloadType() === 'None') {
+    if (option.body != null) {
+      throw new TypeError('Body must not be set for this endpoint.')
+    }
+  } else {
+    throw new TypeError(`Unknown payload type: ${endpoint.payloadType()}`)
   }
 
   return await fetch(buildUrlWithParams(endpoint.url(), params), {

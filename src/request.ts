@@ -15,7 +15,10 @@ const request = async (
   endpoint: Endpoint,
   option: RequestOption
 ): Promise<Response> => {
-  const headers: Record<string, string> = defaultHeaders
+  const headers: Record<string, string> = {
+    ...defaultHeaders,
+    ...option.headers
+  }
   const params: Record<string, string> = { ...defaultParams, ...option.params }
   let body: string | undefined
 
@@ -50,6 +53,7 @@ const request = async (
 interface RequestOption {
   auth: AuthMethod
   params?: Record<string, string>
+  headers?: Record<string, string>
   body?: unknown
 }
 

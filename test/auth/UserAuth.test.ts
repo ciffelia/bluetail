@@ -1,7 +1,5 @@
 import OAuth1 from 'oauth-1.0a'
-import { UserAuth } from '../../src/auth/UserAuth'
-import { KeyPair } from '../../src/auth/KeyPair'
-import { Endpoint } from '../../src'
+import { UserAuth, KeyPair, Endpoint } from '../../src'
 
 describe('UserAuth', () => {
   beforeAll(() => {

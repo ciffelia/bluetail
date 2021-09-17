@@ -1,4 +1,4 @@
-import { AppAuth } from '../../src/auth/AppAuth'
+import { AppAuth } from '../../src'
 
 describe('AppAuth', () => {
   describe('toHeader', () => {

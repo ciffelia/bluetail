@@ -1,5 +1,4 @@
-import { request } from '../src/request'
-import { AppAuth, Endpoint, KeyPair, UserAuth } from '../src'
+import { request, AppAuth, Endpoint, KeyPair, UserAuth } from '../src'
 
 describe('request', () => {
   const endpoint: Endpoint = {

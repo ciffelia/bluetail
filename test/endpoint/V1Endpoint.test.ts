@@ -1,4 +1,4 @@
-import { V1Endpoint } from '../../src/endpoint/V1Endpoint'
+import { V1Endpoint } from '../../src'
 
 describe('V1Endpoint', () => {
   const endpoint = new V1Endpoint({

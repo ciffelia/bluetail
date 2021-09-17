@@ -1,5 +1,5 @@
 import fetch, { Response } from 'cross-fetch'
-import { Endpoint } from './endpoint/Endpoint'
+import { Endpoint } from './endpoint'
 import { AuthMethod } from './auth'
 import { buildUrlWithParams } from './buildUrlWithParams'
 

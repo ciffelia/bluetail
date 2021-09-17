@@ -1,7 +1,8 @@
-import fetch, { Response } from 'cross-fetch'
+import fetch from 'cross-fetch'
 import { Endpoint } from './endpoint'
 import { Credential } from './auth'
 import { buildUrlWithParams } from './buildUrlWithParams'
+import { TwitterError } from './error'
 
 const defaultHeaders = {
   'User-Agent': 'bluetail'
@@ -14,7 +15,7 @@ const defaultParams = {
 const request = async (
   endpoint: Endpoint,
   option: RequestOption
-): Promise<Response> => {
+): Promise<unknown> => {
   const params: Record<string, string> = { ...defaultParams, ...option.params }
 
   const authHeaders = option.credential.toHeaders({
@@ -50,11 +51,26 @@ const request = async (
       throw new TypeError(`Unknown payload type: ${endpoint.payloadType()}`)
   }
 
-  return await fetch(buildUrlWithParams(endpoint.url(), params), {
+  const resp = await fetch(buildUrlWithParams(endpoint.url(), params), {
     method: endpoint.method(),
     headers,
     body
   })
+  const respHeaders = Object.fromEntries(resp.headers)
+  const respBody = await resp.json()
+
+  if (resp.ok) {
+    return {
+      _headers: respHeaders,
+      ...respBody
+    }
+  } else {
+    throw new TwitterError({
+      httpStatus: resp.status,
+      headers: respHeaders,
+      body: respBody
+    })
+  }
 }
 
 interface RequestOption {

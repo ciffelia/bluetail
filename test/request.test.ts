@@ -38,11 +38,9 @@ describe('request', () => {
   it('should return error for invalid app auth', async () => {
     const credential = new AppAuthCredential('bearer_token')
 
-    const resp = await request(endpoint, { credential })
-    expect(resp.status).toEqual(401)
-    expect(await resp.json()).toEqual({
-      errors: [{ code: 89, message: 'Invalid or expired token.' }]
-    })
+    await expect(request(endpoint, { credential })).rejects.toThrow(
+      'Twitter API returned errors: Invalid or expired token.'
+    )
   })
 
   it('should return error for invalid user auth', async () => {
@@ -56,10 +54,8 @@ describe('request', () => {
     }
     const credential = new UserAuthCredential(consumer, accessToken)
 
-    const resp = await request(endpoint, { credential })
-    expect(resp.status).toEqual(401)
-    expect(await resp.json()).toEqual({
-      errors: [{ code: 89, message: 'Invalid or expired token.' }]
-    })
+    await expect(request(endpoint, { credential })).rejects.toThrow(
+      'Twitter API returned errors: Invalid or expired token.'
+    )
   })
 })

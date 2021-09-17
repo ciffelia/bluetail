@@ -1,4 +1,4 @@
-import { Endpoint } from '../Endpoint'
+import { Endpoint } from '../endpoint/Endpoint'
 
 interface AuthorizeOption {
   endpoint: Endpoint

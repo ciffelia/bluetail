@@ -1,4 +1,4 @@
-import { PayloadType } from './PayloadType'
+import { PayloadType } from '../PayloadType'
 
 interface Endpoint {
   method: () => string

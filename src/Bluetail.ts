@@ -9,7 +9,8 @@ class Bluetail {
   }
 
   defaultHeaders: Record<string, string> = {
-    'User-Agent': 'bluetail'
+    'User-Agent': 'bluetail',
+    Accept: 'application/json'
   }
 
   constructor(public defaultCredential?: Credential) {}

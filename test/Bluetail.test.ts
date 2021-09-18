@@ -1,11 +1,9 @@
+import { Endpoint, PayloadType, Bluetail } from '../src'
+import { appCredential, userCredential } from './token/validToken'
 import {
-  Endpoint,
-  PayloadType,
-  KeyPair,
-  AppAuthCredential,
-  UserAuthCredential,
-  Bluetail
-} from '../src'
+  invalidAppCredential,
+  invalidUserCredential
+} from './token/invalidToken'
 
 describe('Bluetail', () => {
   describe('defaultParams', () => {
@@ -28,10 +26,8 @@ describe('Bluetail', () => {
 
   describe('constructor', () => {
     it('returns an instance with credential', () => {
-      const credential = new AppAuthCredential('bearer_token')
-      const bluetail = new Bluetail(credential)
-
-      expect(bluetail.credential).toEqual(credential)
+      const bluetail = new Bluetail(invalidAppCredential)
+      expect(bluetail.credential).toEqual(invalidAppCredential)
     })
 
     it('returns an instance without credential', () => {
@@ -43,13 +39,47 @@ describe('Bluetail', () => {
   describe('request', () => {
     const endpoint: Endpoint = {
       method: () => 'GET',
-      url: () => 'https://api.twitter.com/1.1/account/verify_credentials.json',
+      url: () => 'https://api.twitter.com/1.1/statuses/show/:id.json',
       payloadType: () => 'None'
     }
 
+    it('can be authorized with app auth', async () => {
+      if (appCredential == null) return
+      const bluetail = new Bluetail(appCredential)
+
+      const tweet = await bluetail.request(endpoint, {
+        params: { id: '20' }
+      })
+
+      expect(tweet.id_str).toEqual('20')
+      expect(tweet.full_text).toEqual('just setting up my twttr')
+    })
+
+    it('can be authorized with user auth', async () => {
+      if (userCredential == null) return
+      const bluetail = new Bluetail(userCredential)
+
+      const tweet = await bluetail.request(endpoint, {
+        params: { id: '20' }
+      })
+
+      expect(tweet.id_str).toEqual('20')
+      expect(tweet.full_text).toEqual('just setting up my twttr')
+    })
+
+    it('should include headers', async () => {
+      if (appCredential == null) return
+      const bluetail = new Bluetail(appCredential)
+
+      const tweet = await bluetail.request(endpoint, {
+        params: { id: '20' }
+      })
+
+      expect(tweet._headers['x-rate-limit-limit']).toEqual('900')
+    })
+
     it('should throw error for invalid payload type', async () => {
-      const credential = new AppAuthCredential('bearer_token')
-      const bluetail = new Bluetail(credential)
+      const bluetail = new Bluetail(invalidAppCredential)
 
       await expect(bluetail.request(endpoint, { body: {} })).rejects.toThrow(
         new TypeError('Body must not be set for this endpoint.')
@@ -60,12 +90,11 @@ describe('Bluetail', () => {
       const endpoint: Endpoint = {
         method: () => 'GET',
         url: () =>
-          'https://api.twitter.com/1.1/account/verify_credentials.json',
+          'https://api.twitter.com/1.1/application/rate_limit_status.json',
         payloadType: () => 'Unknown' as PayloadType
       }
 
-      const credential = new AppAuthCredential('bearer_token')
-      const bluetail = new Bluetail(credential)
+      const bluetail = new Bluetail(invalidAppCredential)
 
       await expect(bluetail.request(endpoint)).rejects.toThrow(
         new TypeError('Unknown payload type: Unknown')
@@ -73,8 +102,7 @@ describe('Bluetail', () => {
     })
 
     it('should throw error for invalid app auth', async () => {
-      const credential = new AppAuthCredential('bearer_token')
-      const bluetail = new Bluetail(credential)
+      const bluetail = new Bluetail(invalidAppCredential)
 
       await expect(bluetail.request(endpoint)).rejects.toThrow(
         'Twitter API returned errors: Invalid or expired token.'
@@ -82,16 +110,7 @@ describe('Bluetail', () => {
     })
 
     it('should throw error for invalid user auth', async () => {
-      const consumer: KeyPair = {
-        key: 'consumer_key',
-        secret: 'consumer_secret'
-      }
-      const accessToken: KeyPair = {
-        key: 'access_token_key',
-        secret: 'access_token_secret'
-      }
-      const credential = new UserAuthCredential(consumer, accessToken)
-      const bluetail = new Bluetail(credential)
+      const bluetail = new Bluetail(invalidUserCredential)
 
       await expect(bluetail.request(endpoint)).rejects.toThrow(
         'Twitter API returned errors: Invalid or expired token.'

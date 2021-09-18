@@ -1,24 +1,43 @@
-import {
-  Endpoint,
-  PayloadType,
-  KeyPair,
-  AppAuthCredential,
-  UserAuthCredential
-} from '../../src'
+import { Endpoint, PayloadType } from '../../src'
 import { makeRequest } from '../../src/request'
+import { appCredential, userCredential } from '../token/validToken'
+import {
+  invalidAppCredential,
+  invalidUserCredential
+} from '../token/invalidToken'
 
 describe('makeRequest', () => {
   const endpoint: Endpoint = {
     method: () => 'GET',
-    url: () => 'https://api.twitter.com/1.1/account/verify_credentials.json',
+    url: () => 'https://api.twitter.com/1.1/statuses/show/:id.json',
     payloadType: () => 'None'
   }
 
-  it('should throw error for invalid payload type', async () => {
-    const credential = new AppAuthCredential('bearer_token')
+  it('can be authorized with app auth', async () => {
+    if (appCredential == null) return
+    const resp = await makeRequest(endpoint, {
+      credential: appCredential,
+      params: { id: '20' }
+    })
 
+    expect(resp.status).toEqual(200)
+    expect((await resp.json()).text).toEqual('just setting up my twttr')
+  })
+
+  it('can be authorized with user auth', async () => {
+    if (userCredential == null) return
+    const resp = await makeRequest(endpoint, {
+      credential: userCredential,
+      params: { id: '20' }
+    })
+
+    expect(resp.status).toEqual(200)
+    expect((await resp.json()).text).toEqual('just setting up my twttr')
+  })
+
+  it('should throw error for invalid payload type', async () => {
     await expect(
-      makeRequest(endpoint, { credential, body: {} })
+      makeRequest(endpoint, { credential: invalidAppCredential, body: {} })
     ).rejects.toThrow(new TypeError('Body must not be set for this endpoint.'))
   })
 
@@ -28,17 +47,16 @@ describe('makeRequest', () => {
       url: () => 'https://api.twitter.com/1.1/account/verify_credentials.json',
       payloadType: () => 'Unknown' as PayloadType
     }
-    const credential = new AppAuthCredential('bearer_token')
 
-    await expect(makeRequest(endpoint, { credential })).rejects.toThrow(
-      new TypeError('Unknown payload type: Unknown')
-    )
+    await expect(
+      makeRequest(endpoint, { credential: invalidAppCredential })
+    ).rejects.toThrow(new TypeError('Unknown payload type: Unknown'))
   })
 
   it('should return response for invalid app auth', async () => {
-    const credential = new AppAuthCredential('bearer_token')
-
-    const resp = await makeRequest(endpoint, { credential })
+    const resp = await makeRequest(endpoint, {
+      credential: invalidAppCredential
+    })
 
     expect(resp.status).toEqual(401)
     expect(await resp.json()).toEqual({
@@ -47,17 +65,9 @@ describe('makeRequest', () => {
   })
 
   it('should return response for invalid user auth', async () => {
-    const consumer: KeyPair = {
-      key: 'consumer_key',
-      secret: 'consumer_secret'
-    }
-    const accessToken: KeyPair = {
-      key: 'access_token_key',
-      secret: 'access_token_secret'
-    }
-    const credential = new UserAuthCredential(consumer, accessToken)
-
-    const resp = await makeRequest(endpoint, { credential })
+    const resp = await makeRequest(endpoint, {
+      credential: invalidUserCredential
+    })
 
     expect(resp.status).toEqual(401)
     expect(await resp.json()).toEqual({

@@ -9,5 +9,8 @@
 # Build output
 /dist
 
+# dotenv
+/.env
+
 # WebStorm
 /.idea

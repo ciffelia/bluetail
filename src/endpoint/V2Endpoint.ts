@@ -1,5 +1,5 @@
 import { Endpoint } from './Endpoint'
-import { PayloadType } from '../PayloadType'
+import { PayloadType } from './PayloadType'
 
 class V2Endpoint implements Endpoint {
   constructor(private readonly property: V2EndpointProperty) {}

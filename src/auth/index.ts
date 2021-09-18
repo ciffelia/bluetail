@@ -1,5 +1,5 @@
-export { AppAuthCredential } from './AppAuthCredential'
+export { KeyPair } from './KeyPair'
 export { Credential } from './Credential'
 export { AuthorizeOption } from './AuthorizeOption'
-export { KeyPair } from './KeyPair'
+export { AppAuthCredential } from './AppAuthCredential'
 export { UserAuthCredential } from './UserAuthCredential'

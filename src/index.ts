@@ -1,8 +1,8 @@
 export {
-  AppAuthCredential,
+  KeyPair,
   Credential,
   AuthorizeOption,
-  KeyPair,
+  AppAuthCredential,
   UserAuthCredential
 } from './auth'
 export { Endpoint, PayloadType, V1Endpoint, V2Endpoint } from './endpoint'

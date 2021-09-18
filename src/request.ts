@@ -2,7 +2,7 @@ import fetch from 'cross-fetch'
 import { Endpoint } from './endpoint'
 import { Credential } from './auth'
 import { buildUrlWithParams } from './buildUrlWithParams'
-import { TwitterError } from './error'
+import { parseResponse, TwitterResponse } from './response'
 
 const defaultHeaders = {
   'User-Agent': 'bluetail'
@@ -12,10 +12,10 @@ const defaultParams = {
   tweet_mode: 'extended'
 } as const
 
-const request = async (
+const request = async <T = any>(
   endpoint: Endpoint,
   option: RequestOption
-): Promise<unknown> => {
+): Promise<TwitterResponse<T>> => {
   const params: Record<string, string> = { ...defaultParams, ...option.params }
 
   const authHeaders = option.credential.toHeaders({
@@ -56,21 +56,7 @@ const request = async (
     headers,
     body
   })
-  const respHeaders = Object.fromEntries(resp.headers)
-  const respBody = await resp.json()
-
-  if (resp.ok) {
-    return {
-      _headers: respHeaders,
-      ...respBody
-    }
-  } else {
-    throw new TwitterError({
-      httpStatus: resp.status,
-      headers: respHeaders,
-      body: respBody
-    })
-  }
+  return await parseResponse(resp)
 }
 
 interface RequestOption {

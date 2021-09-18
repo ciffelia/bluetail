@@ -7,21 +7,21 @@ describe('V2Endpoint', () => {
     payloadType: 'JSON'
   })
 
-  it('should return method', async () => {
+  it('should return method', () => {
     expect(endpoint.method()).toEqual('POST')
   })
 
-  it('should return url', async () => {
+  it('should return url', () => {
     expect(endpoint.url()).toEqual(
       'https://api.twitter.com/2/users/6253282/following'
     )
   })
 
-  it('should return payload type', async () => {
+  it('should return payload type', () => {
     expect(endpoint.payloadType()).toEqual('JSON')
   })
 
-  it('should return path', async () => {
+  it('should return path', () => {
     expect(endpoint.path()).toEqual('users/6253282/following')
   })
 })

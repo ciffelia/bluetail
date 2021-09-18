@@ -6,19 +6,19 @@ describe('OAuthEndpoint', () => {
     path: 'oauth2/token'
   })
 
-  it('should return method', async () => {
+  it('should return method', () => {
     expect(endpoint.method()).toEqual('POST')
   })
 
-  it('should return url', async () => {
+  it('should return url', () => {
     expect(endpoint.url()).toEqual('https://api.twitter.com/oauth2/token')
   })
 
-  it('should return payload type', async () => {
+  it('should return payload type', () => {
     expect(endpoint.payloadType()).toEqual('None')
   })
 
-  it('should return path', async () => {
+  it('should return path', () => {
     expect(endpoint.path()).toEqual('oauth2/token')
   })
 })

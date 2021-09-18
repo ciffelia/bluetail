@@ -1,5 +1,6 @@
 import { KeyPair, AppAuthCredential, UserAuthCredential } from '../../src'
 
+const callbackUrl = process.env.TWITTER_CALLBACK_URL
 const bearerToken = process.env.TWITTER_BEARER_TOKEN
 let consumer: KeyPair | undefined
 let accessToken: KeyPair | undefined
@@ -33,4 +34,11 @@ if (consumer != null && accessToken != null) {
   userCredential = new UserAuthCredential(consumer, accessToken)
 }
 
-export { bearerToken, consumer, accessToken, appCredential, userCredential }
+export {
+  callbackUrl,
+  bearerToken,
+  consumer,
+  accessToken,
+  appCredential,
+  userCredential
+}

@@ -1,6 +1,12 @@
 import { Endpoint, PayloadType, Bluetail } from '../src'
-import { appCredential, userCredential } from './token/validToken'
 import {
+  callbackUrl,
+  consumer,
+  appCredential,
+  userCredential
+} from './token/validToken'
+import {
+  invalidConsumer,
   invalidAppCredential,
   invalidUserCredential
 } from './token/invalidToken'
@@ -115,6 +121,93 @@ describe('Bluetail', () => {
       await expect(bluetail.request(endpoint)).rejects.toThrow(
         'Twitter API returned errors: Invalid or expired token.'
       )
+    })
+  })
+
+  describe('oauth1', () => {
+    describe('getRequestToken', () => {
+      it('should returns request token', async () => {
+        if (callbackUrl == null || consumer == null || appCredential == null)
+          return
+        const bluetail = new Bluetail(appCredential)
+
+        const resp = await bluetail.oauth1.getRequestToken(
+          consumer,
+          callbackUrl
+        )
+
+        expect(resp.key).toBeDefined()
+        expect(resp.secret).toBeDefined()
+      })
+
+      // The OAuth 1.0a spec says "The request MUST be signed": https://oauth.net/core/1.0a/#rfc.section.6.1.1
+      // However, Twitter API doesn't seem to verify the signature in oauth/request_token request.
+      // So skipping this test for now.
+      it.skip('should throws error for invalid bearer token', async () => {
+        if (callbackUrl == null || consumer == null) return
+        const bluetail = new Bluetail(invalidAppCredential)
+
+        await expect(
+          bluetail.oauth1.getRequestToken(consumer, callbackUrl)
+        ).rejects.toThrow(
+          'Twitter API returned errors: Could not authenticate you.'
+        )
+      })
+
+      it('should throws error for invalid consumer key', async () => {
+        if (callbackUrl == null || appCredential == null) return
+        const bluetail = new Bluetail(appCredential)
+
+        await expect(
+          bluetail.oauth1.getRequestToken(invalidConsumer, callbackUrl)
+        ).rejects.toThrow(
+          'Twitter API returned errors: Could not authenticate you.'
+        )
+      })
+
+      it('should throws error for invalid callback url', async () => {
+        if (consumer == null || appCredential == null) return
+        const bluetail = new Bluetail(appCredential)
+
+        await expect(
+          bluetail.oauth1.getRequestToken(
+            consumer,
+            'https://example.com/invalid_callback'
+          )
+        ).rejects.toThrow(
+          'Twitter API returned errors: Callback URL not approved for this client application. Approved callback URLs can be adjusted in your application settings'
+        )
+      })
+    })
+
+    describe('getAuthorizeUrl', () => {
+      it('should return authorize url', () => {
+        const bluetail = new Bluetail(invalidAppCredential)
+
+        const url = bluetail.oauth1.getAuthorizeUrl({
+          key: 'request_token_key',
+          secret: 'request_token_secret'
+        })
+
+        expect(url).toEqual(
+          'https://api.twitter.com/oauth/authorize?oauth_token=request_token_key'
+        )
+      })
+    })
+
+    describe('getAuthenticateUrl', () => {
+      it('should return authenticate url', () => {
+        const bluetail = new Bluetail(invalidAppCredential)
+
+        const url = bluetail.oauth1.getAuthenticateUrl({
+          key: 'request_token_key',
+          secret: 'request_token_secret'
+        })
+
+        expect(url).toEqual(
+          'https://api.twitter.com/oauth/authenticate?oauth_token=request_token_key'
+        )
+      })
     })
   })
 })

@@ -13,5 +13,6 @@ export {
   V2Endpoint
 } from './endpoint'
 export { ErrorCode, ErrorResponse, TwitterError } from './error'
+export { RequestOption } from './request'
 export { TwitterResponse } from './response'
-export { request, RequestOption } from './request'
+export { Bluetail } from './Bluetail'

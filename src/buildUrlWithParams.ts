@@ -6,7 +6,11 @@ const buildUrlWithParams = (
 
   if (params != null) {
     for (const [key, value] of Object.entries(params)) {
-      urlObj.searchParams.set(key, value)
+      if (urlObj.pathname.includes(`:${key}`)) {
+        urlObj.pathname = urlObj.pathname.replace(`:${key}`, value)
+      } else {
+        urlObj.searchParams.set(key, value)
+      }
     }
   }
 

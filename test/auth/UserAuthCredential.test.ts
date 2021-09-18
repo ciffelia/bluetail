@@ -2,6 +2,8 @@ import OAuth1 from 'oauth-1.0a'
 import { UserAuthCredential, KeyPair, Endpoint } from '../../src'
 
 describe('UserAuthCredential', () => {
+  // Example values from https://developer.twitter.com/en/docs/authentication/oauth-1-0a/creating-a-signature
+
   beforeAll(() => {
     // @ts-expect-error
     OAuth1.prototype._getTimeStamp = OAuth1.prototype.getTimeStamp
@@ -26,8 +28,6 @@ describe('UserAuthCredential', () => {
 
   describe('toHeader', () => {
     it('should build Authorization header', () => {
-      // Example from https://developer.twitter.com/en/docs/authentication/oauth-1-0a/creating-a-signature
-
       const endpoint: Endpoint = {
         method: () => 'POST',
         url: () => 'https://api.twitter.com/1.1/statuses/update.json',

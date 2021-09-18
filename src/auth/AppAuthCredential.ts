@@ -1,7 +1,7 @@
 import { Credential } from './Credential'
 import { AuthorizeOption } from './AuthorizeOption'
 
-// App auth (OAuth 1.0a)
+// App auth (OAuth 2.0)
 class AppAuthCredential implements Credential {
   constructor(public bearerToken: string) {}
 

@@ -7,7 +7,7 @@ import { buildUrlWithParams } from '../buildUrlWithParams'
 
 // User auth (OAuth 1.0a)
 class UserAuthCredential implements Credential {
-  constructor(public consumer: KeyPair, public accessToken: KeyPair) {}
+  constructor(public consumer: KeyPair, public accessToken?: KeyPair) {}
 
   toHeaders(option: AuthorizeOption): Record<string, string> {
     const oauthClient = createOAuth1Client(this.consumer)

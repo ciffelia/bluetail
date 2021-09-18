@@ -1,5 +1,5 @@
-type TwitterResponse<T> = {
+type TwitterResponse<T> = T & {
   _headers: Record<string, string>
-} & T
+}
 
 export { TwitterResponse }

@@ -12,14 +12,14 @@ class Bluetail {
     'User-Agent': 'bluetail'
   }
 
-  constructor(public credential?: Credential) {}
+  constructor(public defaultCredential?: Credential) {}
 
   async request<T = any>(
     endpoint: Endpoint,
     option: RequestOption = {}
   ): Promise<TwitterResponse<T>> {
     if (option.credential == null) {
-      option.credential = this.credential
+      option.credential = this.defaultCredential
     }
 
     option.params = {

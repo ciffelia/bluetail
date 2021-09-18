@@ -27,12 +27,12 @@ describe('Bluetail', () => {
   describe('constructor', () => {
     it('returns an instance with credential', () => {
       const bluetail = new Bluetail(invalidAppCredential)
-      expect(bluetail.credential).toEqual(invalidAppCredential)
+      expect(bluetail.defaultCredential).toEqual(invalidAppCredential)
     })
 
     it('returns an instance without credential', () => {
       const bluetail = new Bluetail()
-      expect(bluetail.credential).toBeUndefined()
+      expect(bluetail.defaultCredential).toBeUndefined()
     })
   })
 

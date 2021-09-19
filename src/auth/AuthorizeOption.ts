@@ -2,7 +2,7 @@ import { Endpoint } from '../endpoint'
 
 interface AuthorizeOption {
   endpoint: Endpoint
-  params?: Record<string, string>
+  params?: Record<string, any>
   body?: unknown
 }
 

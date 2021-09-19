@@ -1,6 +1,6 @@
 const buildUrlWithParams = (
   url: string,
-  params?: Record<string, string>
+  params?: Record<string, any>
 ): string => {
   const urlObj = new URL(url)
 

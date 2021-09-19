@@ -335,7 +335,7 @@ describe('Bluetail', () => {
           const bluetail = new Bluetail(userCredential)
 
           const user = await bluetail.v1.account.verifyCredentials({
-            params: { include_entities: 'false', skip_status: 'true' }
+            params: { include_entities: false, skip_status: true }
           })
 
           expect(user.id_str).toBeDefined()
@@ -347,7 +347,7 @@ describe('Bluetail', () => {
           const bluetail = new Bluetail(userCredential)
 
           const user = await bluetail.v1.account.verifyCredentials({
-            params: { include_entities: 'false', skip_status: 'true' }
+            params: { include_entities: false, skip_status: true }
           })
 
           expect(user._headers['x-rate-limit-limit']).toEqual('75')

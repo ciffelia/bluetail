@@ -13,7 +13,7 @@ const makeRequest = async (
     params: option.params,
     body: option.body
   })
-  const headers: Record<string, string> = {
+  const headers: Record<string, any> = {
     ...authHeaders,
     ...option.headers
   }

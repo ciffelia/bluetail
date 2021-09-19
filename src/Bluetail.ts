@@ -17,11 +17,11 @@ import {
 } from './model'
 
 class Bluetail {
-  defaultParams: Record<string, string> = {
+  defaultParams: Record<string, any> = {
     tweet_mode: 'extended'
   }
 
-  defaultHeaders: Record<string, string> = {
+  defaultHeaders: Record<string, any> = {
     'User-Agent': 'bluetail',
     Accept: 'application/json'
   }

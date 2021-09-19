@@ -4,13 +4,13 @@ import { PayloadType } from '../../src'
 describe('prepareBody', () => {
   it('should return URL encoded body', () => {
     expect(
-      prepareBody({ hello: 'world', foo: 'bar&baz' }, 'UrlEncodedForm')
-    ).toEqual('hello=world&foo=bar%26baz')
+      prepareBody({ answer: 42, foo: 'bar&baz' }, 'UrlEncodedForm')
+    ).toEqual('answer=42&foo=bar%26baz')
   })
 
   it('should return JSON body', () => {
-    expect(prepareBody({ hello: 'world', foo: 'bar&baz' }, 'JSON')).toEqual(
-      '{"hello":"world","foo":"bar&baz"}'
+    expect(prepareBody({ answer: 42, foo: 'bar&baz' }, 'JSON')).toEqual(
+      '{"answer":42,"foo":"bar&baz"}'
     )
   })
 

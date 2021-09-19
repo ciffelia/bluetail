@@ -1,4 +1,4 @@
-interface RequestTokenResponse {
+interface OAuth1RequestTokenResponse {
   oauth_token: string
   oauth_token_secret: string
 
@@ -6,4 +6,4 @@ interface RequestTokenResponse {
   oauth_callback_confirmed: 'true'
 }
 
-export { RequestTokenResponse }
+export { OAuth1RequestTokenResponse }

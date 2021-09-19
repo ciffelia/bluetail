@@ -1,3 +1,3 @@
-export { AccessTokenResponse } from './AccessTokenResponse'
 export { GetAccessTokenResponse } from './GetAccessTokenResponse'
-export { RequestTokenResponse } from './RequestTokenResponse'
+export { OAuth1AccessTokenResponse } from './OAuth1AccessTokenResponse'
+export { OAuth1RequestTokenResponse } from './OAuth1RequestTokenResponse'

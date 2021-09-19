@@ -14,9 +14,9 @@ export {
 } from './endpoint'
 export { ErrorCode, ErrorResponse, TwitterError } from './error'
 export {
-  AccessTokenResponse,
   GetAccessTokenResponse,
-  RequestTokenResponse
+  OAuth1AccessTokenResponse,
+  OAuth1RequestTokenResponse
 } from './model'
 export { RequestOption } from './request'
 export { TwitterResponse } from './response'

@@ -3,8 +3,8 @@ import { Endpoint, oauth1 } from './endpoint'
 import { makeRequest, RequestOption } from './request'
 import { parseResponse, TwitterResponse } from './response'
 import {
-  RequestTokenResponse,
-  AccessTokenResponse,
+  OAuth1RequestTokenResponse,
+  OAuth1AccessTokenResponse,
   GetAccessTokenResponse
 } from './model'
 
@@ -48,7 +48,7 @@ class Bluetail {
       callbackUrl: string
     ): Promise<KeyPair> => {
       const credential = new UserAuthCredential(consumer)
-      const resp = await this.request<RequestTokenResponse>(
+      const resp = await this.request<OAuth1RequestTokenResponse>(
         oauth1.getRequestToken,
         {
           credential,
@@ -77,7 +77,7 @@ class Bluetail {
       verifier: string
     ): Promise<GetAccessTokenResponse> => {
       const credential = new UserAuthCredential(consumer)
-      const resp = await this.request<AccessTokenResponse>(
+      const resp = await this.request<OAuth1AccessTokenResponse>(
         oauth1.getAccessToken,
         {
           credential,

@@ -44,7 +44,7 @@
     "*.{js,ts}": "eslint"
   },
   "dependencies": {
-    "cross-fetch": "^3.1.4",
+    "cross-fetch": "patch:cross-fetch@^3.1.4#./patch/cross-fetch.diff",
     "oauth-1.0a": "^2.2.6"
   }
 }

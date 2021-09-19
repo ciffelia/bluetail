@@ -1,0 +1,10 @@
+diff --git a/index.d.ts b/index.d.ts
+index 3c030c06a6f245ca993239629410a467cabeadcc..bf64ec9a2327867e47075d3f028b84e73367306f 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -1,4 +1,5 @@
+ /// <reference lib="dom" />
++/// <reference lib="dom.iterable" />
+ 
+ declare const _fetch: typeof fetch;
+ declare const _Request: typeof Request;

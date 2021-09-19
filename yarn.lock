@@ -1350,7 +1350,7 @@ __metadata:
     "@types/jest": ^27.0.1
     "@types/node": 14.17.16
     "@typescript-eslint/eslint-plugin": ^4.31.1
-    cross-fetch: ^3.1.4
+    cross-fetch: "patch:cross-fetch@^3.1.4#./patch/cross-fetch.diff"
     dotenv: ^10.0.0
     eslint: ^7.32.0
     eslint-config-prettier: ^8.3.0
@@ -1704,12 +1704,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-fetch@npm:^3.1.4":
+cross-fetch@^3.1.4:
   version: 3.1.4
   resolution: "cross-fetch@npm:3.1.4"
   dependencies:
     node-fetch: 2.6.1
   checksum: 2107e5e633aa327bdacab036b1907c7ddd28651ede0c1d4fd14db04510944d56849a8255e2f5b8f9a1da0e061b6cee943f6819fe29ed9a130195e7fadd82a4ff
+  languageName: node
+  linkType: hard
+
+"cross-fetch@patch:cross-fetch@^3.1.4#./patch/cross-fetch.diff::locator=bluetail%40workspace%3A.":
+  version: 3.1.4
+  resolution: "cross-fetch@patch:cross-fetch@npm%3A3.1.4#./patch/cross-fetch.diff::version=3.1.4&hash=7e3995&locator=bluetail%40workspace%3A."
+  dependencies:
+    node-fetch: 2.6.1
+  checksum: 7ee1893aa6f1947a431451096be6ea09f0a7f4b36676b32a87a40e03ed6ca19bb010961226cc1cc119df7994a4bc38118772dc74b70520afe519a3784f4d8d59
   languageName: node
   linkType: hard
 

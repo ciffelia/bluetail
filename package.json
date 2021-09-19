@@ -21,9 +21,11 @@
   },
   "dependencies": {
     "cross-fetch": "patch:cross-fetch@^3.1.4#./patch/cross-fetch.diff",
+    "crypto-js": "^4.1.1",
     "oauth-1.0a": "^2.2.6"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.0.2",
     "@types/jest": "^27.0.1",
     "@types/node": "^14.17.17",
     "@typescript-eslint/eslint-plugin": "^4.31.1",

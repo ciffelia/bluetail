@@ -13,7 +13,7 @@ class OAuthEndpoint implements Endpoint {
   }
 
   payloadType(): PayloadType {
-    return 'None'
+    return this.property.payloadType ?? 'None'
   }
 
   path(): string {
@@ -24,6 +24,7 @@ class OAuthEndpoint implements Endpoint {
 interface OAuthEndpointProperty {
   method: string
   path: string
+  payloadType?: PayloadType
 }
 
 export { OAuthEndpoint, OAuthEndpointProperty }

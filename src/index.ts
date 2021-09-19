@@ -13,13 +13,7 @@ export {
   V2Endpoint
 } from './endpoint'
 export { ErrorCode, ErrorResponse, TwitterError } from './error'
-export {
-  GetAccessTokenResponse,
-  OAuth1AccessTokenResponse,
-  OAuth1RequestTokenResponse,
-  OAuth2TokenResponse,
-  OAuth2InvalidateTokenResponse
-} from './model'
+export { GetAccessTokenResponse } from './model'
 export { RequestOption } from './request'
 export { TwitterResponse } from './response'
 export { Bluetail } from './Bluetail'

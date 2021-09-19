@@ -8,9 +8,9 @@ import { Endpoint, oauth1, oauth2 } from './endpoint'
 import { makeRequest, RequestOption } from './request'
 import { parseResponse, TwitterResponse } from './response'
 import {
+  GetAccessTokenResponse,
   OAuth1RequestTokenResponse,
   OAuth1AccessTokenResponse,
-  GetAccessTokenResponse,
   OAuth2TokenResponse,
   OAuth2InvalidateTokenResponse
 } from './model'

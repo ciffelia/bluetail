@@ -19,6 +19,10 @@
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
   },
+  "dependencies": {
+    "cross-fetch": "patch:cross-fetch@^3.1.4#./patch/cross-fetch.diff",
+    "oauth-1.0a": "^2.2.6"
+  },
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "@types/node": "14.17.16",
@@ -42,9 +46,5 @@
   "lint-staged": {
     "*.{js,ts,json,yml,md}": "prettier --check",
     "*.{js,ts}": "eslint"
-  },
-  "dependencies": {
-    "cross-fetch": "patch:cross-fetch@^3.1.4#./patch/cross-fetch.diff",
-    "oauth-1.0a": "^2.2.6"
   }
 }

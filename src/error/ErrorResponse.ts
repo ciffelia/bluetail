@@ -1,7 +1,7 @@
 import { ErrorCode } from './ErrorCode'
 
 interface ErrorResponse {
-  errors: ErrorCode[]
+  errors?: ErrorCode[]
 }
 
 export { ErrorResponse }

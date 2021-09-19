@@ -42,7 +42,7 @@ describe('TwitterError', () => {
   describe('message', () => {
     it(`should return error message`, () => {
       expect(error.message).toEqual(
-        'Twitter API returned errors: Invalid or expired token.'
+        'Twitter API returned HTTP 401: Invalid or expired token.'
       )
     })
   })

@@ -7,15 +7,18 @@ class TwitterError extends Error {
   readonly errors: ErrorCode[]
 
   constructor(property: TwitterErrorProperty) {
-    const returnedErrorMessages = property.body.errors
+    const errors = property.body.errors ?? []
+    const returnedErrorMessages = errors
       .map((error) => error.message)
       .join(', ')
 
-    super(`Twitter API returned errors: ${returnedErrorMessages}`)
+    super(
+      `Twitter API returned HTTP ${property.httpStatus}: ${returnedErrorMessages}`
+    )
 
     this.httpStatus = property.httpStatus
     this.headers = property.headers
-    this.errors = property.body.errors
+    this.errors = errors
   }
 
   get name(): string {

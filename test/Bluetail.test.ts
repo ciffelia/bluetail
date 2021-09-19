@@ -111,7 +111,7 @@ describe('Bluetail', () => {
       const bluetail = new Bluetail(invalidAppCredential)
 
       await expect(bluetail.request(endpoint)).rejects.toThrow(
-        'Twitter API returned errors: Invalid or expired token.'
+        'Twitter API returned HTTP 401: Invalid or expired token.'
       )
     })
 
@@ -119,7 +119,7 @@ describe('Bluetail', () => {
       const bluetail = new Bluetail(invalidUserCredential)
 
       await expect(bluetail.request(endpoint)).rejects.toThrow(
-        'Twitter API returned errors: Invalid or expired token.'
+        'Twitter API returned HTTP 401: Invalid or expired token.'
       )
     })
   })
@@ -161,7 +161,7 @@ describe('Bluetail', () => {
         await expect(
           bluetail.oauth1.getRequestToken(invalidConsumer, callbackUrl)
         ).rejects.toThrow(
-          'Twitter API returned errors: Could not authenticate you.'
+          'Twitter API returned HTTP 401: Could not authenticate you.'
         )
       })
 
@@ -175,7 +175,7 @@ describe('Bluetail', () => {
             'https://example.com/invalid_callback'
           )
         ).rejects.toThrow(
-          'Twitter API returned errors: Callback URL not approved for this client application. Approved callback URLs can be adjusted in your application settings'
+          'Twitter API returned HTTP 403: Callback URL not approved for this client application. Approved callback URLs can be adjusted in your application settings'
         )
       })
     })

@@ -19,7 +19,7 @@ const oauth1 = {
   }),
   invalidateAccessToken: new OAuthEndpoint({
     method: 'POST',
-    path: 'oauth/invalidate_token'
+    path: '1.1/oauth/invalidate_token'
   })
 } as const
 

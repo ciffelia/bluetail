@@ -1,7 +1,7 @@
-import { Buffer } from 'buffer'
 import { Credential } from './Credential'
 import { AuthorizeOption } from './AuthorizeOption'
 import { KeyPair } from './KeyPair'
+import { toBase64 } from '../toBase64'
 
 // Credential used in oauth2/token request
 class GetBearerTokenCredential implements Credential {
@@ -11,10 +11,7 @@ class GetBearerTokenCredential implements Credential {
     const encodedKey = encodeURIComponent(this.consumer.key)
     const encodedSecret = encodeURIComponent(this.consumer.secret)
 
-    const base64 = Buffer.from(`${encodedKey}:${encodedSecret}`).toString(
-      'base64'
-    )
-
+    const base64 = toBase64(`${encodedKey}:${encodedSecret}`)
     return {
       Authorization: `Basic ${base64}`
     }

@@ -1,11 +1,18 @@
-import { KeyPair, Credential, UserAuthCredential } from './auth'
-import { Endpoint, oauth1 } from './endpoint'
+import {
+  KeyPair,
+  Credential,
+  UserAuthCredential,
+  GetBearerTokenCredential
+} from './auth'
+import { Endpoint, oauth1, oauth2 } from './endpoint'
 import { makeRequest, RequestOption } from './request'
 import { parseResponse, TwitterResponse } from './response'
 import {
   OAuth1RequestTokenResponse,
   OAuth1AccessTokenResponse,
-  GetAccessTokenResponse
+  GetAccessTokenResponse,
+  OAuth2TokenResponse,
+  OAuth2InvalidateTokenResponse
 } from './model'
 
 class Bluetail {
@@ -93,6 +100,42 @@ class Bluetail {
         userId: resp.user_id,
         screenName: resp.screen_name
       }
+    }
+  } as const
+
+  readonly oauth2 = {
+    getBearerToken: async (consumer: KeyPair): Promise<string> => {
+      const credential = new GetBearerTokenCredential(consumer)
+      const resp = await this.request<OAuth2TokenResponse>(
+        oauth2.getBearerToken,
+        {
+          credential,
+          body: { grant_type: 'client_credentials' }
+        }
+      )
+
+      if (resp.token_type === 'bearer') {
+        return resp.access_token
+      } else {
+        throw new Error('"token_type" is not "bearer"')
+      }
+    },
+
+    // Important note: This API seems to be broken since 2019: https://twittercommunity.com/t/oauth2-invalidate-token-not-working-with-sorry-that-page-does-not-exist-code-34-error/120646
+    // Note: the second argument must be the application owner's access token & access token secret
+    invalidateBearerToken: async (
+      consumer: KeyPair,
+      accessToken: KeyPair,
+      bearerToken: string
+    ) => {
+      const credential = new UserAuthCredential(consumer, accessToken)
+      await this.request<OAuth2InvalidateTokenResponse>(
+        oauth2.invalidateBearerToken,
+        {
+          credential,
+          params: { access_token: bearerToken }
+        }
+      )
     }
   } as const
 }

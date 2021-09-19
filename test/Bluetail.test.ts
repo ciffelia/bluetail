@@ -1,14 +1,18 @@
 import { Endpoint, PayloadType, Bluetail } from '../src'
 import {
   callbackUrl,
+  bearerToken,
   consumer,
   appCredential,
-  userCredential
+  userCredential,
+  accessToken
 } from './token/validToken'
 import {
+  invalidBearerToken,
   invalidConsumer,
   invalidAppCredential,
-  invalidUserCredential
+  invalidUserCredential,
+  invalidAccessToken
 } from './token/invalidToken'
 
 describe('Bluetail', () => {
@@ -207,6 +211,86 @@ describe('Bluetail', () => {
         expect(url).toEqual(
           'https://api.twitter.com/oauth/authenticate?oauth_token=request_token_key'
         )
+      })
+    })
+  })
+
+  describe('oauth2', () => {
+    describe('getBearerToken', () => {
+      it('should returns bearer token', async () => {
+        if (bearerToken == null || consumer == null) return
+        const bluetail = new Bluetail()
+
+        const obtainedBearerToken = await bluetail.oauth2.getBearerToken(
+          consumer
+        )
+        expect(obtainedBearerToken).toEqual(bearerToken)
+      })
+
+      it('should throws error for invalid consumer key', async () => {
+        const bluetail = new Bluetail()
+
+        await expect(
+          bluetail.oauth2.getBearerToken(invalidConsumer)
+        ).rejects.toThrow(
+          'Twitter API returned HTTP 403: Unable to verify your credentials'
+        )
+      })
+    })
+
+    // This API seems to be broken since 2019: https://twittercommunity.com/t/oauth2-invalidate-token-not-working-with-sorry-that-page-does-not-exist-code-34-error/120646
+    describe.skip('invalidateBearerToken', () => {
+      // Normally we don't want to invalidate the bearer token on every test.
+      it.skip('should invalidates bearer token', async () => {
+        if (bearerToken == null || consumer == null || accessToken == null)
+          return
+        const bluetail = new Bluetail()
+
+        await bluetail.oauth2.invalidateBearerToken(
+          consumer,
+          accessToken,
+          bearerToken
+        )
+      })
+
+      it('should throws error for invalid consumer key', async () => {
+        if (bearerToken == null || accessToken == null) return
+        const bluetail = new Bluetail()
+
+        await expect(
+          bluetail.oauth2.invalidateBearerToken(
+            invalidConsumer,
+            accessToken,
+            bearerToken
+          )
+        ).rejects.toThrow('Twitter API returned HTTP 403: ')
+      })
+
+      it('should throws error for invalid access token', async () => {
+        if (bearerToken == null || consumer == null) return
+        const bluetail = new Bluetail()
+
+        await expect(
+          bluetail.oauth2.invalidateBearerToken(
+            consumer,
+            invalidAccessToken,
+            bearerToken
+          )
+        ).rejects.toThrow('Twitter API returned HTTP 403: ')
+      })
+
+      // Note: the access token must be the application owner's token
+      it('should throws error for invalid bearer token', async () => {
+        if (consumer == null || accessToken == null) return
+        const bluetail = new Bluetail()
+
+        await expect(
+          bluetail.oauth2.invalidateBearerToken(
+            consumer,
+            accessToken,
+            invalidBearerToken
+          )
+        ).rejects.toThrow('Twitter API returned HTTP 403: ')
       })
     })
   })

@@ -326,4 +326,72 @@ describe('Bluetail', () => {
       })
     })
   })
+
+  describe('v1', () => {
+    describe('account', () => {
+      describe('verifyCredentials', () => {
+        it('should obtain the authorized account', async () => {
+          if (userCredential == null) return
+          const bluetail = new Bluetail(userCredential)
+
+          const user = await bluetail.v1.account.verifyCredentials({
+            params: { include_entities: 'false', skip_status: 'true' }
+          })
+
+          expect(user.id_str).toBeDefined()
+          expect(user.statuses_count).toBeDefined()
+        })
+
+        it('should include headers', async () => {
+          if (userCredential == null) return
+          const bluetail = new Bluetail(userCredential)
+
+          const user = await bluetail.v1.account.verifyCredentials({
+            params: { include_entities: 'false', skip_status: 'true' }
+          })
+
+          expect(user._headers['x-rate-limit-limit']).toEqual('75')
+        })
+      })
+    })
+
+    describe('tweet', () => {
+      describe('show', () => {
+        it('should obtain a tweet with app auth', async () => {
+          if (appCredential == null) return
+          const bluetail = new Bluetail(appCredential)
+
+          const tweet = await bluetail.v1.tweet.show({
+            params: { id: '20' }
+          })
+
+          expect(tweet.id_str).toEqual('20')
+          expect(tweet.full_text).toEqual('just setting up my twttr')
+        })
+
+        it('should obtain a tweet with user auth', async () => {
+          if (userCredential == null) return
+          const bluetail = new Bluetail(userCredential)
+
+          const tweet = await bluetail.v1.tweet.show({
+            params: { id: '20' }
+          })
+
+          expect(tweet.id_str).toEqual('20')
+          expect(tweet.full_text).toEqual('just setting up my twttr')
+        })
+
+        it('should include headers', async () => {
+          if (appCredential == null) return
+          const bluetail = new Bluetail(appCredential)
+
+          const tweet = await bluetail.v1.tweet.show({
+            params: { id: '20' }
+          })
+
+          expect(tweet._headers['x-rate-limit-limit']).toEqual('900')
+        })
+      })
+    })
+  })
 })

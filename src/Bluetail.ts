@@ -4,7 +4,7 @@ import {
   UserAuthCredential,
   GetBearerTokenCredential
 } from './auth'
-import { Endpoint, oauth1, oauth2 } from './endpoint'
+import { Endpoint, oauth1, oauth2, v1 } from './endpoint'
 import { makeRequest, RequestOption } from './request'
 import { parseResponse, TwitterResponse } from './response'
 import {
@@ -145,6 +145,24 @@ class Bluetail {
           params: { access_token: bearerToken }
         }
       )
+    }
+  } as const
+
+  readonly v1 = {
+    account: {
+      verifyCredentials: async <T = any>(
+        option: RequestOption = {}
+      ): Promise<TwitterResponse<T>> => {
+        return await this.request<T>(v1.account.verifyCredentials, option)
+      }
+    },
+
+    tweet: {
+      show: async <T = any>(
+        option: RequestOption = {}
+      ): Promise<TwitterResponse<T>> => {
+        return await this.request<T>(v1.tweet.show, option)
+      }
     }
   } as const
 }

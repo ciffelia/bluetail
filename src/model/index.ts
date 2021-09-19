@@ -1,5 +1,6 @@
 export { GetAccessTokenResponse } from './GetAccessTokenResponse'
 export { OAuth1RequestTokenResponse } from './OAuth1RequestTokenResponse'
 export { OAuth1AccessTokenResponse } from './OAuth1AccessTokenResponse'
+export { OAuth1InvalidateTokenResponse } from './OAuth1InvalidateTokenResponse'
 export { OAuth2TokenResponse } from './OAuth2TokenResponse'
 export { OAuth2InvalidateTokenResponse } from './OAuth2InvalidateTokenResponse'

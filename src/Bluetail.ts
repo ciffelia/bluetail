@@ -11,6 +11,7 @@ import {
   GetAccessTokenResponse,
   OAuth1RequestTokenResponse,
   OAuth1AccessTokenResponse,
+  OAuth1InvalidateTokenResponse,
   OAuth2TokenResponse,
   OAuth2InvalidateTokenResponse
 } from './model'
@@ -100,6 +101,14 @@ class Bluetail {
         userId: resp.user_id,
         screenName: resp.screen_name
       }
+    },
+
+    invalidateAccessToken: async (consumer: KeyPair, accessToken: KeyPair) => {
+      const credential = new UserAuthCredential(consumer, accessToken)
+      await this.request<OAuth1InvalidateTokenResponse>(
+        oauth1.invalidateAccessToken,
+        { credential }
+      )
     }
   } as const
 

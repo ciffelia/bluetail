@@ -213,6 +213,38 @@ describe('Bluetail', () => {
         )
       })
     })
+
+    describe('invalidateAccessToken', () => {
+      // Normally we don't want to invalidate the access token on every test.
+      it.skip('should invalidates access token', async () => {
+        if (consumer == null || accessToken == null) return
+        const bluetail = new Bluetail()
+
+        await bluetail.oauth1.invalidateAccessToken(consumer, accessToken)
+      })
+
+      it('should throws error for invalid consumer key', async () => {
+        if (accessToken == null) return
+        const bluetail = new Bluetail()
+
+        await expect(
+          bluetail.oauth1.invalidateAccessToken(invalidConsumer, accessToken)
+        ).rejects.toThrow(
+          'Twitter API returned HTTP 401: Could not authenticate you.'
+        )
+      })
+
+      it('should throws error for invalid access token', async () => {
+        if (consumer == null) return
+        const bluetail = new Bluetail()
+
+        await expect(
+          bluetail.oauth1.invalidateAccessToken(consumer, invalidAccessToken)
+        ).rejects.toThrow(
+          'Twitter API returned HTTP 401: Invalid or expired token.'
+        )
+      })
+    })
   })
 
   describe('oauth2', () => {

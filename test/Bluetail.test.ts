@@ -140,8 +140,8 @@ describe('Bluetail', () => {
           callbackUrl
         )
 
-        expect(resp.key).toBeDefined()
-        expect(resp.secret).toBeDefined()
+        expect(resp.key).toBeString()
+        expect(resp.secret).toBeString()
       })
 
       // The OAuth 1.0a spec says "The request MUST be signed": https://oauth.net/core/1.0a/#rfc.section.6.1.1
@@ -338,8 +338,8 @@ describe('Bluetail', () => {
             params: { include_entities: false, skip_status: true }
           })
 
-          expect(user.id_str).toBeDefined()
-          expect(user.statuses_count).toBeDefined()
+          expect(user.id_str).toBeString()
+          expect(user.statuses_count).toBeNumber()
         })
 
         it('should include headers', async () => {

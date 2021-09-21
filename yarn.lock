@@ -2882,7 +2882,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-fth@^1.0.0:
+"fth@npm:^1.0.0":
   version: 1.0.0
   resolution: "fth@npm:1.0.0"
   dependencies:
@@ -4909,11 +4909,11 @@ fth@^1.0.0:
   linkType: hard
 
 "node-fetch@npm:^2":
-  version: 2.6.3
-  resolution: "node-fetch@npm:2.6.3"
+  version: 2.6.4
+  resolution: "node-fetch@npm:2.6.4"
   dependencies:
     whatwg-url: ^5.0.0
-  checksum: 50cfbdda65f574b604b46dcd5a74f0c332bc36a48f92d9c786ba1b2bfd6c41b92283162f0f96b82b576e5f6715139342d482100454b84f0011401ea44ef97786
+  checksum: 0ab0e1f16776aea6f27bcb68b86dcdf2096f9eb728bb7d028ce3e75ae22bd08cb908b7c00a4dd86ad5b31f154494b6fc18051863cd89f0bce66130f3b432c597
   languageName: node
   linkType: hard
 

@@ -1,4 +1,4 @@
-import { Response } from 'cross-fetch'
+import { Response } from 'fth'
 import { TwitterResponse } from './TwitterResponse'
 import { TwitterError } from '../error'
 

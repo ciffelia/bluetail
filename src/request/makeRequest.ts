@@ -1,4 +1,4 @@
-import fetch, { Response } from 'cross-fetch'
+import fetch, { Response } from 'fth'
 import { Endpoint } from '../endpoint'
 import { RequestOption } from './RequestOption'
 import { buildUrlWithParams } from '../buildUrlWithParams'

@@ -3,5 +3,6 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   setupFiles: ['dotenv/config'],
-  setupFilesAfterEnv: ['jest-extended']
+  setupFilesAfterEnv: ['jest-extended'],
+  resolver: '<rootDir>/test/jestResolver.js'
 }

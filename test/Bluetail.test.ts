@@ -6,14 +6,14 @@ import {
   appCredential,
   userCredential,
   accessToken
-} from './token/validToken'
+} from './testUtils/validToken'
 import {
   invalidBearerToken,
   invalidConsumer,
   invalidAppCredential,
   invalidUserCredential,
   invalidAccessToken
-} from './token/invalidToken'
+} from './testUtils/invalidToken'
 
 describe('Bluetail', () => {
   describe('defaultParams', () => {

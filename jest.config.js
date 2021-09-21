@@ -4,5 +4,5 @@ module.exports = {
   testEnvironment: 'node',
   setupFiles: ['dotenv/config'],
   setupFilesAfterEnv: ['jest-extended'],
-  resolver: '<rootDir>/test/jestResolver.js'
+  resolver: '<rootDir>/test/testUtils/jestResolver.js'
 }

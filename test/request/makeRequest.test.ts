@@ -1,10 +1,10 @@
 import { Endpoint, PayloadType } from '../../src'
 import { makeRequest } from '../../src/request'
-import { appCredential, userCredential } from '../token/validToken'
+import { appCredential, userCredential } from '../testUtils/validToken'
 import {
   invalidAppCredential,
   invalidUserCredential
-} from '../token/invalidToken'
+} from '../testUtils/invalidToken'
 
 describe('makeRequest', () => {
   const endpoint: Endpoint = {

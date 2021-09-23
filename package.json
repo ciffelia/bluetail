@@ -24,7 +24,7 @@
   "dependencies": {
     "abort-controller": "^3.0.0",
     "crypto-js": "^4.1.1",
-    "fth": "^1.0.0",
+    "fth": "^1.1.0",
     "oauth-1.0a": "^2.2.6"
   },
   "devDependencies": {

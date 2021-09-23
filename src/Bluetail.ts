@@ -33,8 +33,8 @@ class Bluetail {
   /**
    * Send a request to the endpoint.
    *
-   * @param endpoint An API endpoint to send request
-   * @param options
+   * @param endpoint - An API endpoint to send request
+   * @param options - Request options
    */
   async request<T = any>(
     endpoint: Endpoint,
@@ -70,8 +70,8 @@ class Bluetail {
     /**
      * Returns request token.
      *
-     * @param consumer
-     * @param callbackUrl
+     * @param consumer - A consumer token
+     * @param callbackUrl - Callback URL
      *
      * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/request_token}
      */
@@ -98,7 +98,7 @@ class Bluetail {
     /**
      * Returns authorize URL to redirect user.
      *
-     * @param requestToken
+     * @param requestToken - A request token
      *
      * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/authorize}
      */
@@ -109,7 +109,7 @@ class Bluetail {
     /**
      * Returns authenticate URL to redirect user.
      *
-     * @param requestToken
+     * @param requestToken - A request token
      *
      * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/authenticate}
      */
@@ -120,9 +120,9 @@ class Bluetail {
     /**
      * Returns access token key and secret.
      *
-     * @param consumer
-     * @param requestToken
-     * @param verifier
+     * @param consumer - A consumer token
+     * @param requestToken - A request token
+     * @param verifier - The verifier returned in the callback URL
      *
      * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/access_token}
      */
@@ -153,8 +153,8 @@ class Bluetail {
     /**
      * Invalidates access token.
      *
-     * @param consumer
-     * @param accessToken
+     * @param consumer - A consumer token
+     * @param accessToken - An access token to invalidate
      *
      * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/invalidate_access_token}
      */
@@ -176,7 +176,7 @@ class Bluetail {
     /**
      * Returns bearer token.
      *
-     * @param consumer
+     * @param consumer - A consumer token
      *
      * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/token}
      */
@@ -202,9 +202,9 @@ class Bluetail {
      *
      * Note: According to Twitter Developers Forum, this API seems to be broken since 2019.
      *
-     * @param consumer
-     * @param accessToken the application owner's access token key and secret
-     * @param bearerToken
+     * @param consumer - A consumer token
+     * @param accessToken - The application owner's access token
+     * @param bearerToken - A bearer token to invalidate
      *
      * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/invalidate_bearer_token}
      * @see {@link https://twittercommunity.com/t/oauth2-invalidate-token-not-working-with-sorry-that-page-does-not-exist-code-34-error/120646}
@@ -235,7 +235,7 @@ class Bluetail {
       /**
        * Verifies user auth credentials and returns authorized user information.
        *
-       * @param options
+       * @param options - Request options
        *
        * @see {@link https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/manage-account-settings/api-reference/get-account-verify_credentials}
        */
@@ -250,7 +250,7 @@ class Bluetail {
       /**
        * Returns a tweet, specified by the id parameter.
        *
-       * @param options
+       * @param options - Request options
        *
        * @see {@link https://developer.twitter.com/en/docs/twitter-api/v1/tweets/post-and-engage/api-reference/get-statuses-show-id}
        */

@@ -6,7 +6,9 @@
   "main": "./dist/main.js",
   "types": "./dist/main.d.ts",
   "scripts": {
-    "build": "rimraf ./dist && tsc",
+    "build": "rimraf ./dist && yarn build:typescript && yarn build:docs",
+    "build:typescript": "tsc",
+    "build:docs": "typedoc",
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "lint:prettier": "prettier --check .",
@@ -47,6 +49,7 @@
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.5",
+    "typedoc": "^0.22.4",
     "typescript": "^4.4.3"
   },
   "packageManager": "yarn@3.0.2",

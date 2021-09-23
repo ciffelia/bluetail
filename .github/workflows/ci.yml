@@ -6,7 +6,7 @@ env:
   NODE_VERSION: 14
 
 jobs:
-  build:
+  build-typescript:
     runs-on: ubuntu-20.04
 
     steps:
@@ -16,7 +16,19 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: yarn
       - run: yarn install --immutable
-      - run: yarn run build
+      - run: yarn run build:typescript
+
+  build-docs:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - run: yarn install --immutable
+      - run: yarn run build:docs
 
   lint:
     runs-on: ubuntu-20.04

@@ -34,15 +34,24 @@ import {
  * ```
  */
 class Bluetail {
+  /**
+   * URL parameters
+   */
   defaultParams: Record<string, any> = {
     tweet_mode: 'extended'
   }
 
+  /**
+   * Request headers
+   */
   defaultHeaders: Record<string, any> = {
     'User-Agent': 'bluetail',
     Accept: 'application/json'
   }
 
+  /**
+   * Request timeout in milliseconds
+   */
   defaultTimeout: number = 10000
 
   constructor(public defaultCredential?: Credential) {}

@@ -16,6 +16,15 @@ import {
 } from './testUtils/invalidToken'
 
 describe('Bluetail', () => {
+  describe('defaultCredential', () => {
+    it('can be mutated', () => {
+      const bluetail = new Bluetail()
+      bluetail.defaultCredential = invalidAppCredential
+
+      expect(bluetail.defaultCredential).toEqual(invalidAppCredential)
+    })
+  })
+
   describe('defaultParams', () => {
     it('can be mutated', () => {
       const bluetail = new Bluetail()

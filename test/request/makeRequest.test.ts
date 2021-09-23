@@ -1,4 +1,4 @@
-import { Endpoint, PayloadType } from '../../src'
+import { Endpoint, PayloadType, TimeoutError } from '../../src'
 import { makeRequest } from '../../src/request'
 import { appCredential, userCredential } from '../testUtils/validToken'
 import {
@@ -17,7 +17,8 @@ describe('makeRequest', () => {
     if (appCredential == null) return
     const resp = await makeRequest(endpoint, {
       credential: appCredential,
-      params: { id: '20' }
+      params: { id: '20' },
+      timeout: 10000
     })
 
     expect(resp.status).toEqual(200)
@@ -28,7 +29,8 @@ describe('makeRequest', () => {
     if (userCredential == null) return
     const resp = await makeRequest(endpoint, {
       credential: userCredential,
-      params: { id: '20' }
+      params: { id: '20' },
+      timeout: 10000
     })
 
     expect(resp.status).toEqual(200)
@@ -73,5 +75,19 @@ describe('makeRequest', () => {
     expect(await resp.json()).toEqual({
       errors: [{ code: 89, message: 'Invalid or expired token.' }]
     })
+  })
+
+  it('should throw error on timeout', async () => {
+    const endpoint: Endpoint = {
+      method: () => 'GET',
+      url: () => 'https://httpstat.us/200?sleep=5000',
+      payloadType: () => 'None'
+    }
+
+    await expect(
+      makeRequest(endpoint, {
+        timeout: 1000
+      })
+    ).rejects.toThrow(new TimeoutError())
   })
 })

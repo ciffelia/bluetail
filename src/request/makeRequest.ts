@@ -1,8 +1,10 @@
 import fetch, { Response } from 'fth'
+import AbortController from 'abort-controller'
 import { Endpoint } from '../endpoint'
 import { RequestOption } from './RequestOption'
 import { buildUrlWithParams } from '../buildUrlWithParams'
 import { prepareBody } from './prepareBody'
+import { TimeoutError } from '../error'
 
 const makeRequest = async (
   endpoint: Endpoint,
@@ -29,11 +31,29 @@ const makeRequest = async (
 
   const body = prepareBody(option.body, endpoint.payloadType())
 
-  return await fetch(buildUrlWithParams(endpoint.url(), option.params), {
-    method: endpoint.method(),
-    headers,
-    body
-  })
+  const controller = new AbortController()
+  const timeout = setTimeout(() => {
+    if (option.timeout != null) {
+      controller.abort()
+    }
+  }, option.timeout ?? 0)
+
+  try {
+    return await fetch(buildUrlWithParams(endpoint.url(), option.params), {
+      method: endpoint.method(),
+      headers,
+      body,
+      signal: controller.signal
+    })
+  } catch (err) {
+    if (err instanceof Error && err.name === 'AbortError') {
+      throw new TimeoutError()
+    } else {
+      throw err
+    }
+  } finally {
+    clearTimeout(timeout)
+  }
 }
 
 export { makeRequest }

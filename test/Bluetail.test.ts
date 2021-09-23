@@ -1,4 +1,4 @@
-import { Endpoint, PayloadType, Bluetail } from '../src'
+import { Endpoint, PayloadType, Bluetail, TimeoutError } from '../src'
 import {
   callbackUrl,
   bearerToken,
@@ -34,6 +34,15 @@ describe('Bluetail', () => {
     })
   })
 
+  describe('defaultTimeout', () => {
+    it('can be mutated', () => {
+      const bluetail = new Bluetail()
+      bluetail.defaultTimeout = 1000
+
+      expect(bluetail.defaultTimeout).toEqual(1000)
+    })
+  })
+
   describe('constructor', () => {
     it('returns an instance with credential', () => {
       const bluetail = new Bluetail(invalidAppCredential)
@@ -58,7 +67,8 @@ describe('Bluetail', () => {
       const bluetail = new Bluetail(appCredential)
 
       const tweet = await bluetail.request(endpoint, {
-        params: { id: '20' }
+        params: { id: '20' },
+        timeout: 10000
       })
 
       expect(tweet.id_str).toEqual('20')
@@ -70,7 +80,8 @@ describe('Bluetail', () => {
       const bluetail = new Bluetail(userCredential)
 
       const tweet = await bluetail.request(endpoint, {
-        params: { id: '20' }
+        params: { id: '20' },
+        timeout: 10000
       })
 
       expect(tweet.id_str).toEqual('20')
@@ -125,6 +136,20 @@ describe('Bluetail', () => {
       await expect(bluetail.request(endpoint)).rejects.toThrow(
         'Twitter API returned HTTP 401: Invalid or expired token.'
       )
+    })
+
+    it('should throw error on timeout', async () => {
+      const endpoint: Endpoint = {
+        method: () => 'GET',
+        url: () => 'https://httpstat.us/200?sleep=5000',
+        payloadType: () => 'None'
+      }
+
+      const bluetail = new Bluetail()
+
+      await expect(
+        bluetail.request(endpoint, { timeout: 1000 })
+      ).rejects.toThrow(new TimeoutError())
     })
   })
 

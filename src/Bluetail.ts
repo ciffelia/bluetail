@@ -26,6 +26,8 @@ class Bluetail {
     Accept: 'application/json'
   }
 
+  defaultTimeout: number = 10000
+
   constructor(public defaultCredential?: Credential) {}
 
   async request<T = any>(
@@ -34,6 +36,9 @@ class Bluetail {
   ): Promise<TwitterResponse<T>> {
     if (option.credential == null) {
       option.credential = this.defaultCredential
+    }
+    if (option.timeout == null) {
+      option.timeout = this.defaultTimeout
     }
 
     option.params = {

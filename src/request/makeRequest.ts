@@ -10,6 +10,10 @@ const makeRequest = async (
   endpoint: Endpoint,
   options: RequestOptions
 ): Promise<Response> => {
+  // Build URL
+  const url = buildUrlWithParams(endpoint.url(), options.params)
+
+  // Build headers
   const authHeaders = options.credential?.toHeaders({
     endpoint,
     params: options.params,
@@ -29,8 +33,10 @@ const makeRequest = async (
       break
   }
 
+  // Build body
   const body = prepareBody(options.body, endpoint.payloadType())
 
+  // Prepare AbortController
   const controller = new AbortController()
   const timeout = setTimeout(() => {
     if (options.timeout != null) {
@@ -39,7 +45,7 @@ const makeRequest = async (
   }, options.timeout ?? 0)
 
   try {
-    return await fetch(buildUrlWithParams(endpoint.url(), options.params), {
+    return await fetch(url, {
       method: endpoint.method(),
       headers,
       body,

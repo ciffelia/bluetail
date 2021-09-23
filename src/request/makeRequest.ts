@@ -1,23 +1,23 @@
 import fetch, { Response } from 'fth'
 import AbortController from 'abort-controller'
 import { Endpoint } from '../endpoint'
-import { RequestOption } from './RequestOption'
+import { RequestOptions } from './RequestOptions'
 import { buildUrlWithParams } from '../buildUrlWithParams'
 import { prepareBody } from './prepareBody'
 import { TimeoutError } from '../error'
 
 const makeRequest = async (
   endpoint: Endpoint,
-  option: RequestOption
+  options: RequestOptions
 ): Promise<Response> => {
-  const authHeaders = option.credential?.toHeaders({
+  const authHeaders = options.credential?.toHeaders({
     endpoint,
-    params: option.params,
-    body: option.body
+    params: options.params,
+    body: options.body
   })
   const headers: Record<string, any> = {
     ...authHeaders,
-    ...option.headers
+    ...options.headers
   }
 
   switch (endpoint.payloadType()) {
@@ -29,17 +29,17 @@ const makeRequest = async (
       break
   }
 
-  const body = prepareBody(option.body, endpoint.payloadType())
+  const body = prepareBody(options.body, endpoint.payloadType())
 
   const controller = new AbortController()
   const timeout = setTimeout(() => {
-    if (option.timeout != null) {
+    if (options.timeout != null) {
       controller.abort()
     }
-  }, option.timeout ?? 0)
+  }, options.timeout ?? 0)
 
   try {
-    return await fetch(buildUrlWithParams(endpoint.url(), option.params), {
+    return await fetch(buildUrlWithParams(endpoint.url(), options.params), {
       method: endpoint.method(),
       headers,
       body,

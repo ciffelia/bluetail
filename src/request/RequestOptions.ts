@@ -3,7 +3,7 @@ import { Credential } from '../auth'
 /**
  * Options for Twitter API request
  */
-interface RequestOption {
+interface RequestOptions {
   credential?: Credential
   params?: Record<string, any>
   headers?: Record<string, any>
@@ -11,4 +11,4 @@ interface RequestOption {
   timeout?: number
 }
 
-export { RequestOption }
+export { RequestOptions }

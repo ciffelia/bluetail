@@ -1,7 +1,7 @@
-import { AuthorizeOption } from './AuthorizeOption'
+import { AuthorizeOptions } from './AuthorizeOptions'
 
 interface Credential {
-  toHeaders: (option: AuthorizeOption) => Record<string, string>
+  toHeaders: (options: AuthorizeOptions) => Record<string, string>
 }
 
 export { Credential }

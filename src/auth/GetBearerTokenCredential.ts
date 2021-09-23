@@ -1,5 +1,5 @@
 import { Credential } from './Credential'
-import { AuthorizeOption } from './AuthorizeOption'
+import { AuthorizeOptions } from './AuthorizeOptions'
 import { KeyPair } from './KeyPair'
 import { toBase64 } from '../toBase64'
 
@@ -7,7 +7,7 @@ import { toBase64 } from '../toBase64'
 class GetBearerTokenCredential implements Credential {
   constructor(public consumer: KeyPair) {}
 
-  toHeaders(_option?: AuthorizeOption): Record<string, string> {
+  toHeaders(_options?: AuthorizeOptions): Record<string, string> {
     const encodedKey = encodeURIComponent(this.consumer.key)
     const encodedSecret = encodeURIComponent(this.consumer.secret)
 

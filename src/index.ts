@@ -1,7 +1,7 @@
 export {
   KeyPair,
   Credential,
-  AuthorizeOption,
+  AuthorizeOptions,
   AppAuthCredential,
   UserAuthCredential
 } from './auth'
@@ -14,6 +14,6 @@ export {
 } from './endpoint'
 export { ErrorCode, ErrorResponse, TwitterError, TimeoutError } from './error'
 export { GetAccessTokenResponse } from './model'
-export { RequestOption } from './request'
+export { RequestOptions } from './request'
 export { TwitterResponse } from './response'
 export { Bluetail } from './Bluetail'

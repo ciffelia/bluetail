@@ -1,7 +1,7 @@
 import OAuth1 from 'oauth-1.0a'
 import { Credential } from './Credential'
 import { KeyPair } from './KeyPair'
-import { AuthorizeOption } from './AuthorizeOption'
+import { AuthorizeOptions } from './AuthorizeOptions'
 import { createOAuth1Client } from './createOAuth1Client'
 import { buildUrlWithParams } from '../buildUrlWithParams'
 
@@ -9,15 +9,15 @@ import { buildUrlWithParams } from '../buildUrlWithParams'
 class UserAuthCredential implements Credential {
   constructor(public consumer: KeyPair, public accessToken?: KeyPair) {}
 
-  toHeaders(option: AuthorizeOption): Record<string, string> {
+  toHeaders(options: AuthorizeOptions): Record<string, string> {
     const oauthClient = createOAuth1Client(this.consumer)
 
     const request: OAuth1.RequestOptions = {
-      url: buildUrlWithParams(option.endpoint.url(), option.params),
-      method: option.endpoint.method()
+      url: buildUrlWithParams(options.endpoint.url(), options.params),
+      method: options.endpoint.method()
     }
-    if (option.endpoint.payloadType() === 'UrlEncodedForm') {
-      request.data = option.body
+    if (options.endpoint.payloadType() === 'UrlEncodedForm') {
+      request.data = options.body
     }
 
     const authorization = oauthClient.authorize(request, this.accessToken)

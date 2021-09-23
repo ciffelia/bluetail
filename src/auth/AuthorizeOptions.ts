@@ -1,9 +1,9 @@
 import { Endpoint } from '../endpoint'
 
-interface AuthorizeOption {
+interface AuthorizeOptions {
   endpoint: Endpoint
   params?: Record<string, any>
   body?: unknown
 }
 
-export { AuthorizeOption }
+export { AuthorizeOptions }

@@ -5,7 +5,7 @@ import {
   GetBearerTokenCredential
 } from './auth'
 import { Endpoint, oauth1, oauth2, v1 } from './endpoint'
-import { makeRequest, RequestOption } from './request'
+import { makeRequest, RequestOptions } from './request'
 import { parseResponse, TwitterResponse } from './response'
 import {
   GetAccessTokenResponse,
@@ -32,25 +32,25 @@ class Bluetail {
 
   async request<T = any>(
     endpoint: Endpoint,
-    option: RequestOption = {}
+    options: RequestOptions = {}
   ): Promise<TwitterResponse<T>> {
-    if (option.credential == null) {
-      option.credential = this.defaultCredential
+    if (options.credential == null) {
+      options.credential = this.defaultCredential
     }
-    if (option.timeout == null) {
-      option.timeout = this.defaultTimeout
+    if (options.timeout == null) {
+      options.timeout = this.defaultTimeout
     }
 
-    option.params = {
+    options.params = {
       ...this.defaultParams,
-      ...option.params
+      ...options.params
     }
-    option.headers = {
+    options.headers = {
       ...this.defaultHeaders,
-      ...option.headers
+      ...options.headers
     }
 
-    const resp = await makeRequest(endpoint, option)
+    const resp = await makeRequest(endpoint, options)
 
     return await parseResponse<T>(resp)
   }
@@ -156,17 +156,17 @@ class Bluetail {
   readonly v1 = {
     account: {
       verifyCredentials: async <T = any>(
-        option: RequestOption = {}
+        options: RequestOptions = {}
       ): Promise<TwitterResponse<T>> => {
-        return await this.request<T>(v1.account.verifyCredentials, option)
+        return await this.request<T>(v1.account.verifyCredentials, options)
       }
     },
 
     tweet: {
       show: async <T = any>(
-        option: RequestOption = {}
+        options: RequestOptions = {}
       ): Promise<TwitterResponse<T>> => {
-        return await this.request<T>(v1.tweet.show, option)
+        return await this.request<T>(v1.tweet.show, options)
       }
     }
   } as const

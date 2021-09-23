@@ -1,2 +1,2 @@
 export { makeRequest } from './makeRequest'
-export { RequestOption } from './RequestOption'
+export { RequestOptions } from './RequestOptions'

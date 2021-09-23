@@ -1,6 +1,6 @@
 export { KeyPair } from './KeyPair'
 export { Credential } from './Credential'
-export { AuthorizeOption } from './AuthorizeOption'
+export { AuthorizeOptions } from './AuthorizeOptions'
 export { AppAuthCredential } from './AppAuthCredential'
 export { UserAuthCredential } from './UserAuthCredential'
 export { GetBearerTokenCredential } from './GetBearerTokenCredential'

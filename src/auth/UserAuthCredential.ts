@@ -5,7 +5,9 @@ import { AuthorizeOptions } from './AuthorizeOptions'
 import { createOAuth1Client } from './createOAuth1Client'
 import { buildUrlWithParams } from '../buildUrlWithParams'
 
-// User auth (OAuth 1.0a)
+/**
+ * Credential for OAuth 1.0a authorization (user auth)
+ */
 class UserAuthCredential implements Credential {
   constructor(public consumer: KeyPair, public accessToken?: KeyPair) {}
 

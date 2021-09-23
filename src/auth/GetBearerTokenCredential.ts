@@ -3,7 +3,11 @@ import { AuthorizeOptions } from './AuthorizeOptions'
 import { KeyPair } from './KeyPair'
 import { toBase64 } from '../toBase64'
 
-// Credential used in oauth2/token request
+/**
+ * Credential for `oauth2/token` request authorization
+ *
+ * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/token}
+ */
 class GetBearerTokenCredential implements Credential {
   constructor(public consumer: KeyPair) {}
 

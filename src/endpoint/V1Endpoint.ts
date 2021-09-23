@@ -1,6 +1,9 @@
 import { Endpoint } from './Endpoint'
 import { PayloadType } from './PayloadType'
 
+/**
+ * Twitter API v1 endpoint
+ */
 class V1Endpoint implements Endpoint {
   constructor(private readonly property: V1EndpointProperty) {}
 

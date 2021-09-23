@@ -30,6 +30,12 @@ class Bluetail {
 
   constructor(public defaultCredential?: Credential) {}
 
+  /**
+   * Send a request to the endpoint.
+   *
+   * @param endpoint An API endpoint to send request
+   * @param options
+   */
   async request<T = any>(
     endpoint: Endpoint,
     options: RequestOptions = {}
@@ -55,7 +61,20 @@ class Bluetail {
     return await parseResponse<T>(resp)
   }
 
+  /**
+   * OAuth 1.0a API methods
+   *
+   * @see {@link https://developer.twitter.com/en/docs/authentication/oauth-1-0a}
+   */
   readonly oauth1 = {
+    /**
+     * Returns request token.
+     *
+     * @param consumer
+     * @param callbackUrl
+     *
+     * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/request_token}
+     */
     getRequestToken: async (
       consumer: KeyPair,
       callbackUrl: string
@@ -76,14 +95,37 @@ class Bluetail {
       }
     },
 
+    /**
+     * Returns authorize URL to redirect user.
+     *
+     * @param requestToken
+     *
+     * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/authorize}
+     */
     getAuthorizeUrl: (requestToken: KeyPair): string => {
       return `${oauth1.authorize.url()}?oauth_token=${requestToken.key}`
     },
 
+    /**
+     * Returns authenticate URL to redirect user.
+     *
+     * @param requestToken
+     *
+     * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/authenticate}
+     */
     getAuthenticateUrl: (requestToken: KeyPair): string => {
       return `${oauth1.authenticate.url()}?oauth_token=${requestToken.key}`
     },
 
+    /**
+     * Returns access token key and secret.
+     *
+     * @param consumer
+     * @param requestToken
+     * @param verifier
+     *
+     * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/access_token}
+     */
     getAccessToken: async (
       consumer: KeyPair,
       requestToken: KeyPair,
@@ -108,6 +150,14 @@ class Bluetail {
       }
     },
 
+    /**
+     * Invalidates access token.
+     *
+     * @param consumer
+     * @param accessToken
+     *
+     * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/invalidate_access_token}
+     */
     invalidateAccessToken: async (consumer: KeyPair, accessToken: KeyPair) => {
       const credential = new UserAuthCredential(consumer, accessToken)
       await this.request<OAuth1InvalidateTokenResponse>(
@@ -117,7 +167,19 @@ class Bluetail {
     }
   } as const
 
+  /**
+   * OAuth 2.0 API methods
+   *
+   * @see {@link https://developer.twitter.com/en/docs/authentication/oauth-2-0}
+   */
   readonly oauth2 = {
+    /**
+     * Returns bearer token.
+     *
+     * @param consumer
+     *
+     * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/token}
+     */
     getBearerToken: async (consumer: KeyPair): Promise<string> => {
       const credential = new GetBearerTokenCredential(consumer)
       const resp = await this.request<OAuth2TokenResponse>(
@@ -135,8 +197,18 @@ class Bluetail {
       }
     },
 
-    // Important note: This API seems to be broken since 2019: https://twittercommunity.com/t/oauth2-invalidate-token-not-working-with-sorry-that-page-does-not-exist-code-34-error/120646
-    // Note: the second argument must be the application owner's access token & access token secret
+    /**
+     * Invalidates bearer token.
+     *
+     * Note: According to Twitter Developers Forum, this API seems to be broken since 2019.
+     *
+     * @param consumer
+     * @param accessToken the application owner's access token key and secret
+     * @param bearerToken
+     *
+     * @see {@link https://developer.twitter.com/en/docs/authentication/api-reference/invalidate_bearer_token}
+     * @see {@link https://twittercommunity.com/t/oauth2-invalidate-token-not-working-with-sorry-that-page-does-not-exist-code-34-error/120646}
+     */
     invalidateBearerToken: async (
       consumer: KeyPair,
       accessToken: KeyPair,
@@ -153,8 +225,20 @@ class Bluetail {
     }
   } as const
 
+  /**
+   * v1 API methods
+   *
+   * @see {@link https://developer.twitter.com/en/docs/twitter-api}
+   */
   readonly v1 = {
     account: {
+      /**
+       * Verifies user auth credentials and returns authorized user information.
+       *
+       * @param options
+       *
+       * @see {@link https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/manage-account-settings/api-reference/get-account-verify_credentials}
+       */
       verifyCredentials: async <T = any>(
         options: RequestOptions = {}
       ): Promise<TwitterResponse<T>> => {
@@ -163,6 +247,13 @@ class Bluetail {
     },
 
     tweet: {
+      /**
+       * Returns a tweet, specified by the id parameter.
+       *
+       * @param options
+       *
+       * @see {@link https://developer.twitter.com/en/docs/twitter-api/v1/tweets/post-and-engage/api-reference/get-statuses-show-id}
+       */
       show: async <T = any>(
         options: RequestOptions = {}
       ): Promise<TwitterResponse<T>> => {

@@ -28,6 +28,9 @@ class V1Endpoint implements Endpoint {
   }
 }
 
+/**
+ * Properties to create {@link V1Endpoint}
+ */
 interface V1EndpointProperty {
   subdomain?: string
   method: string

@@ -24,6 +24,9 @@ class OAuthEndpoint implements Endpoint {
   }
 }
 
+/**
+ * Properties to create {@link OAuthEndpoint}
+ */
 interface OAuthEndpointProperty {
   method: string
   path: string

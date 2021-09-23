@@ -40,6 +40,9 @@ class TwitterError extends Error {
   }
 }
 
+/**
+ * Properties to create {@link TwitterError}
+ */
 interface TwitterErrorProperty {
   httpStatus: number
   headers: Record<string, string>

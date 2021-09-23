@@ -24,6 +24,9 @@ class V2Endpoint implements Endpoint {
   }
 }
 
+/**
+ * Properties to create {@link V2Endpoint}
+ */
 interface V2EndpointProperty {
   method: string
   path: string

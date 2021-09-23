@@ -16,6 +16,23 @@ import {
   OAuth2InvalidateTokenResponse
 } from './model'
 
+/**
+ * Twitter API client
+ *
+ * @example
+ * ```ts
+ * import { Bluetail, UserAuthCredential } from 'bluetail'
+ *
+ * const credential = new UserAuthCredential(...)
+ * const bluetail = new Bluetail(credential)
+ *
+ * const tweet = await bluetail.v1.tweet.show({
+ *   params: { id: '20' }
+ * })
+ *
+ * console.log(tweet.full_text)
+ * ```
+ */
 class Bluetail {
   defaultParams: Record<string, any> = {
     tweet_mode: 'extended'
